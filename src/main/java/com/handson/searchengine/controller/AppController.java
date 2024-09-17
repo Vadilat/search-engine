@@ -1,6 +1,5 @@
 package com.handson.searchengine.controller;
 
-
 import com.handson.searchengine.crawler.Crawler;
 import com.handson.searchengine.model.CrawlStatus;
 import com.handson.searchengine.model.CrawlStatusOut;
@@ -20,13 +19,25 @@ public class AppController {
     Crawler crawler;
 
     @RequestMapping(value = "/crawl", method = RequestMethod.POST)
-    public CrawlStatusOut crawl(@RequestBody CrawlerRequest request) throws IOException, InterruptedException {
+    public String crawl(@RequestBody CrawlerRequest request) throws IOException, InterruptedException {
         String crawlId = generateCrawlId();
         if (!request.getUrl().startsWith("http")) {
             request.setUrl("https://" + request.getUrl());
         }
-        CrawlStatus res = crawler.crawl(crawlId, request);
-        return CrawlStatusOut.of(res);
+        new Thread(()-> {
+            try {
+                crawler.crawl(crawlId, request);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        return crawlId;
+    }
+
+    @RequestMapping(value = "/crawl/{crawlId}", method = RequestMethod.GET)
+    public CrawlStatusOut getCrawl(@PathVariable String crawlId) throws IOException, InterruptedException {
+        return crawler.getCrawlInfo(crawlId);
     }
 
     private String generateCrawlId() {
