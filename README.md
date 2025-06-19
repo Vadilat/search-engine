@@ -20,11 +20,12 @@ Designed to perform concurrent, depth-limited crawls, it tracks progress via Red
 ---
 
 ## Features
-- Crawl any website recursively with configurable depth, time, and max URL limits
-- Asynchronous & non-blocking processing with WebFlux and Kafka
-- Uses Redis for crawl state and URL deduplication
-- Indexes anchor text content from crawled pages into ElasticSearch
-- Exposes REST API for triggering crawl and checking crawl status
+- Submit a crawl request with configurable depth, max pages, and time limit
+- Async Kafka-based processing of URLs
+- Automatic URL deduplication using Redis
+- Status tracking for each crawl (visited pages, duration, stop reason)
+- Extracts links from pages and recursively queues them
+- Indexes results in Elasticsearch for later searching
 - Graceful handling of timeouts, distance limits, and max URL thresholds
 
 ---
@@ -38,14 +39,14 @@ src/
 │   │       ├── config/            → Kafka and Redis configurations
 │   │       │   ├── KafkaTopicConfig.java
 │   │       │   └── RedisConfig.java
-│   │       ├── controller/        → REST endpoints for starting and monitoring crawls
+│   │       ├── controller/        → REST endpoints
 │   │       │   └── AppController.java
-│   │       ├── crawler/           → Core crawling logic and Redis state management
+│   │       ├── crawler/           → Core crawling logic
 │   │       │   └── Crawler.java
-│   │       ├── kafka/             → Kafka producer and consumer components
+│   │       ├── kafka/             → Kafka producer and consumer
 │   │       │   ├── Producer.java
 │   │       │   └── Consumer.java
-│   │       ├── model/             → DTO's for requests, records, status
+│   │       ├── model/             → Data Transfer Objects (DTOs)
 │   │       └── util/              → ElasticSearch integration
 │   │           └── ElasticSearch.java
 │   └── resources/
@@ -86,7 +87,7 @@ Java
 Maven
 Kafka + Zookeeper
 Redis 
-ElasticSearch (API key-based)
+ElasticSearch
 ```
 ### Build & Run
 ```bash
