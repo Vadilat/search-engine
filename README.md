@@ -1,4 +1,4 @@
-# Distributed Web Crawler with Kafka & ElasticSearch
+# Search Engine
 A scalable Java-based web crawler that extracts and indexes website content in real-time. 
 Designed to perform concurrent, depth-limited crawls, it tracks progress via Redis and stores indexed content in Elasticsearch for full-text search.
 
