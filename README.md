@@ -45,7 +45,7 @@ src/
 │   │       ├── kafka/             → Kafka producer and consumer components
 │   │       │   ├── Producer.java
 │   │       │   └── Consumer.java
-│   │       ├── model/             → POJOs for requests, records, status
+│   │       ├── model/             → DTO's for requests, records, status
 │   │       └── util/              → ElasticSearch integration
 │   │           └── ElasticSearch.java
 │   └── resources/
