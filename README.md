@@ -54,7 +54,7 @@ src/
 └── pom.xml
 ```
 ---
-### example request
+### Example request
 ```http
 POST /api/crawl
 Content-Type: application/json
